@@ -11,7 +11,6 @@ import com.ibm.fhir.model.resource.Resource;
 
 public class HttpUtils {
 	
-	// 參數設定
 	private FHIRClient getPropertiesClient() throws Exception {
 		Properties clientProperties = new Properties();
         clientProperties.setProperty(FHIRClient.PROPNAME_BASE_URL, System.getenv("FHIR_HTTP_URL"));
@@ -23,7 +22,6 @@ public class HttpUtils {
         return FHIRClientFactory.getClient(clientProperties);
 	}
 	
-	// 根據 id 做讀取 (read)
 	public Resource getResourceById(String resourceName, String id) throws Exception {
 		if (resourceName == null || resourceName.length() == 0) {
 			return null;
@@ -34,7 +32,6 @@ public class HttpUtils {
 		return response.getResource(Resource.class);
 	}
 		
-	// 根據 變數 做搜尋 (search)
 	public Bundle getResourceByParameters(String resourceName, Map<String, String> parameterMap) throws Exception {
 		if (resourceName == null || resourceName.length() == 0) {
 			return null;
@@ -54,13 +51,11 @@ public class HttpUtils {
 		return response.getResource(Bundle.class);
 	}
 	
-	// 新建一個 resource
 	public FHIRResponse create(Resource resource) throws Exception {
         FHIRClient client = this.getPropertiesClient();
         return client.create(resource);
 	}
 	
-	// 刪除一個 resource
 	public FHIRResponse delete(Resource resource, String id) throws Exception {
 		if (id == null || id.length() == 0) {
 			return null;
@@ -70,7 +65,6 @@ public class HttpUtils {
         return client.delete(resource.getClass().getSimpleName(), id, null);
 	}
 	
-	// 修改一個 resource
 	public FHIRResponse update(Resource resource) throws Exception {
         FHIRClient client = this.getPropertiesClient();
         return client.update(resource, null);
